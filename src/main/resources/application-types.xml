@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="American-Flight-Example" format="json">
+      <types:shape format="weave" example="examples/American_flights_example.json"><![CDATA[%dw 2.0
+
+type American_Flight_Example = Array<{|  ID: Number {"typeId": "int"},   code: String,   price: Number {"typeId": "int"},   departureDate: String,   origin: String,   destination: String,   emptySeats: Number {"typeId": "int"},   plane: {|    "type": String,     totalSeats: Number {"typeId": "int"}  |}|}> {"example": "[{\\\"ID\\\":1,\\\"code\\\":\\\"ER38sd\\\",\\\"price\\\":400,\\\"departureDate\\\":\\\"2017\\/07\\/26\\\",\\\"origin\\\":\\\"CLE\\\",\\\"destination\\\":\\\"SFO\\\",\\\"emptySeats\\\":0,\\\"plane\\\":{\\\"type\\\":\\\"Boeing 737\\\",\\\"totalSeats\\\":150}},{\\\"ID\\\":2,\\\"code\\\":\\\"ER45if\\\",\\\"price\\\":540.99,\\\"departureDate\\\":\\\"2017\\/07\\/27\\\",\\\"origin\\\":\\\"SFO\\\",\\\"destination\\\":\\\"ORD\\\",\\\"emptySeats\\\":54,\\\"plane\\\":{\\\"type\\\":\\\"Boeing 777\\\",\\\"totalSeats\\\":300}}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="American_Raw" format="json">
+      <types:shape format="weave" example="examples/American_flights_example_raw.json"><![CDATA[%dw 2.0
+
+type American_Raw = Array<{|  ID: Number {"typeId": "int"},   code: String,   price: Number {"typeId": "int"},   departureDate: String,   origin: String,   destination: String,   emptySeats: Number {"typeId": "int"},   plane: {|    "type": String,     totalSeats: Number {"typeId": "int"}  |}|}> {"example": "[{\\\"ID\\\":1,\\\"code\\\":\\\"ER38sd\\\",\\\"price\\\":400,\\\"departureDate\\\":\\\"2017\\/07\\/26\\\",\\\"origin\\\":\\\"CLE\\\",\\\"destination\\\":\\\"SFO\\\",\\\"emptySeats\\\":0,\\\"plane\\\":{\\\"type\\\":\\\"Boeing 737\\\",\\\"totalSeats\\\":150}},{\\\"ID\\\":2,\\\"code\\\":\\\"ER45if\\\",\\\"price\\\":540.99,\\\"departureDate\\\":\\\"2017\\/07\\/27\\\",\\\"origin\\\":\\\"SFO\\\",\\\"destination\\\":\\\"ORD\\\",\\\"emptySeats\\\":54,\\\"plane\\\":{\\\"type\\\":\\\"Boeing 777\\\",\\\"totalSeats\\\":300}}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#ad9bffd6-a0b8-4cb2-b69d-e9f0b2f64427">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="American-Flight-Example"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#e20e98a5-77ca-4deb-a7aa-b505ce821a57">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="American_Raw"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
